@@ -19,14 +19,14 @@ class TemplateEngine {
 	}
 
 	#tokenize(input){
-		let tokenizerstate = this.#TokenizerState.FistState;
+		let tokenizerstate = this.#TokenizerState.FirstState;
 		let offset = 0;
 		let templatelen = input.length;
 		let TokenizeResult = [];
 
 		while(offset < templatelen) {
 			switch(tokenizerstate){
-				case this.#TokenizerState.FistState:
+				case this.#TokenizerState.FirstState:
 					if (input[offset] == "{") {
 						tokenizerstate = this.#TokenizerState.LeftBraketState;
 					} else {
@@ -91,7 +91,6 @@ class TemplateEngine {
 		}
 
 		let mappingvaraibles = new Map();
-
 		for(let [key, val] of Object.entries(object)){
 			mappingvaraibles.set(key, val);
 		}
@@ -133,22 +132,22 @@ class MessageGenerator {
 	async #getNotedata() {
 		let notechartdata = await this.misskey.getNoteChart();
 		return {
-			note_total: notechartdata["total"][1],
-			note_increase: notechartdata["inc"][1],
-			note_decrease: notechartdata["dec"][1]
+			note_total: notechartdata["total"][0],
+			note_increase: notechartdata["inc"][0],
+			note_decrease: notechartdata["dec"][0]
 		}
 	}
 
 	async #getFollowData() {
 		let followingchartdata = await this.misskey.getFollowingChart();
 		return {
-			following_total: (followingchartdata["local"]["followings"]["total"])[1] + (followingchartdata["remote"]["followings"]["total"])[1],
-			following_increase: (followingchartdata["local"]["followings"]["inc"])[1] + (followingchartdata["remote"]["followings"]["inc"])[1],
-			following_decrease: (followingchartdata["local"]["followings"]["dec"])[1] + (followingchartdata["remote"]["followings"]["inc"])[1],
+			following_total: (followingchartdata["local"]["followings"]["total"])[0] + (followingchartdata["remote"]["followings"]["total"])[0],
+			following_increase: (followingchartdata["local"]["followings"]["inc"])[0] + (followingchartdata["remote"]["followings"]["inc"])[0],
+			following_decrease: (followingchartdata["local"]["followings"]["dec"])[0] + (followingchartdata["remote"]["followings"]["inc"])[0],
 
-			follower_total: (followingchartdata["local"]["followers"]["total"])[1] + (followingchartdata["remote"]["followers"]["total"])[1],
-			follower_increase: (followingchartdata["local"]["followers"]["inc"])[1] + (followingchartdata["remote"]["followers"]["inc"])[1],
-			follower_decrease: (followingchartdata["local"]["followers"]["dec"])[1] + (followingchartdata["remote"]["followers"]["inc"])[1],
+			follower_total: (followingchartdata["local"]["followers"]["total"])[0] + (followingchartdata["remote"]["followers"]["total"])[0],
+			follower_increase: (followingchartdata["local"]["followers"]["inc"])[0] + (followingchartdata["remote"]["followers"]["inc"])[0],
+			follower_decrease: (followingchartdata["local"]["followers"]["dec"])[0] + (followingchartdata["remote"]["followers"]["inc"])[0],
 		}
 	}
 
